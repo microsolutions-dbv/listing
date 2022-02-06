@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://listing:123456@netuno:27017/listing
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://authserver:8080
