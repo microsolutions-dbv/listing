@@ -9,13 +9,13 @@ import org.springframework.security.web.SecurityFilterChain
 class WebSecurityConfiguration {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http.mvcMatcher("/listings/**")
-            .authorizeRequests()
-            .mvcMatchers("/listings/**")
-            .access("hasAuthority('listing.read')")
-            .and()
-            .oauth2ResourceServer()
-            .jwt()
+//        http.securityMatcher("/listings/**")
+//            .authorizeRequests()
+//            .mvcMatchers("/listings/**")
+//            .access("hasAuthority('listing.read')")
+//            .and()
+//            .oauth2ResourceServer()
+//            .jwt()
 
         return http.build()
     }

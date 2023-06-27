@@ -1,7 +1,7 @@
 package com.dbiagi.listing.service
 
-import com.dbiagi.listing.Exchanges
-import com.dbiagi.listing.RoutingKeys
+import com.dbiagi.listing.config.Exchanges
+import com.dbiagi.listing.config.RoutingKeys
 import com.dbiagi.listing.document.Listing
 import com.dbiagi.listing.domain.CreateListingRequest
 import com.dbiagi.listing.repository.ListingRepository
@@ -13,8 +13,7 @@ import reactor.core.publisher.Mono
 
 @Service
 class ListingService(private val listingRepository: ListingRepository,
-                     private val messagingTemplate: RabbitMessagingTemplate,
-                     private val objectMapper: ObjectMapper) {
+                     private val rabbitMqService: RabbitMqService) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -24,7 +23,7 @@ class ListingService(private val listingRepository: ListingRepository,
             .map { toListing(request) }
             .flatMap { listingRepository.save(it) }
             .doOnSuccess {
-                notify(Exchanges.LISTING_CREATED, RoutingKeys.LISTING_CREATED, it)
+                rabbitMqService.sendMessage(Exchanges.LISTING_CREATED, RoutingKeys.LISTING_CREATED, it)
                 logger.info("listing created listing={}", it)
             }
             .doOnError { ex ->
@@ -45,10 +44,4 @@ class ListingService(private val listingRepository: ListingRepository,
                 image = request.image,
                 ownerId = null,
             )
-
-    fun notify(exchange: String, routingKey: String, listing: Listing) {
-        val payload = objectMapper.writeValueAsBytes(listing)
-
-        messagingTemplate.convertAndSend(exchange, routingKey, payload)
-    }
 }

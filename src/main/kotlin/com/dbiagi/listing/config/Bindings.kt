@@ -1,4 +1,4 @@
-package com.dbiagi.listing
+package com.dbiagi.listing.config
 
 object Exchanges {
     const val LISTING_CREATED: String = "listing.created"

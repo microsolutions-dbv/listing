@@ -1,7 +1,7 @@
 package com.dbiagi.listing.domain
 
+import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
-import javax.validation.constraints.NotNull
 
 data class CreateListingRequest(
     @get:NotNull

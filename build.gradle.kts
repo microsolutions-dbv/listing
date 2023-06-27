@@ -1,23 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.6.2"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.5.21"
-    kotlin("plugin.spring") version "1.5.21"
-    kotlin("plugin.jpa") version "1.5.21"
-
-    id("groovy")
+    id("org.springframework.boot") version "3.1.1"
+    id("io.spring.dependency-management") version "1.1.0"
+    kotlin("jvm") version "1.8.22"
+    kotlin("plugin.spring") version "1.8.22"
 }
 
 group = "com.dbiagi"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
 
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
@@ -25,7 +19,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -38,19 +31,22 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("io.github.microutils:kotlin-logging:1.12.5")
 
+    // database
+    implementation("org.springframework.data:spring-data-r2dbc")
+    implementation("org.postgresql:r2dbc-postgresql")
+
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
-
-    testImplementation("org.codehaus.groovy:groovy-all:3.0.8")
-    testImplementation(platform("org.spockframework:spock-bom:2.0-groovy-3.0"))
-    testImplementation("org.spockframework:spock-core")
+    testImplementation("org.mockito:mockito-core:4.8.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        freeCompilerArgs += "-Xjsr305=strict"
+        jvmTarget = "17"
     }
 }
 
