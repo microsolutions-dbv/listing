@@ -1,9 +1,43 @@
 spring:
-  data:
-    mongodb:
-      uri: mongodb://listing:123456@netuno:27017/listing
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://authserver:8080
+  r2dbc:
+    username: listing
+    password: Ifu!iag12ui1
+    url: r2dbc:postgresql://netuno:5432/listing
+  rabbitmq:
+    username: listing
+    password: R%@WE64C6^qt
+    host: netuno
+    port: 5672
+    listener:
+      type: simple
+      simple:
+        prefetch: 3
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+  jackson:
+    locale: en_US
+    date-format: "yyyy-MM-dd'T'HH:mm:ss"
+    time-zone: UTC
+    default-property-inclusion: non_null
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      READ_UNKNOWN_ENUM_VALUES_AS_NULL: true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://authserver:8080
+logging:
+  level:
+    org.springframework.r2dbc: debug
+
+app:
+  paging:
+    maxItemsPerPage: 30
+  services:
+    baseUrl: http://localhost:3000

@@ -34,6 +34,7 @@ dependencies {
     // database
     implementation("org.springframework.data:spring-data-r2dbc")
     implementation("org.postgresql:r2dbc-postgresql")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
