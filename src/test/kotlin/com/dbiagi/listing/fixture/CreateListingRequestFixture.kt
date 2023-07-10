@@ -10,6 +10,6 @@ object CreateListingRequestFixture {
         price = BigDecimal.TEN,
         image = null,
         title = "Listing title",
-        ownerId = ""
+        ownerId = "8f6f6ff0-beb5-4f31-8b13-858986b3b344"
     )
 }

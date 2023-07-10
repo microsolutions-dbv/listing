@@ -59,8 +59,8 @@ class ClientConfig {
         .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, (connectTimeout.toInt() * 1000))
         .responseTimeout(Duration.ofSeconds(timeout))
         .doOnConnected { conn ->
-            conn.addHandlerLast(ReadTimeoutHandler(timeout, TimeUnit.MILLISECONDS))
-                .addHandlerLast(WriteTimeoutHandler(timeout, TimeUnit.MILLISECONDS))
+            conn.addHandlerLast(ReadTimeoutHandler(timeout, TimeUnit.SECONDS))
+                .addHandlerLast(WriteTimeoutHandler(timeout, TimeUnit.SECONDS))
         }
 
 
