@@ -76,4 +76,22 @@ class ListingService(
         logger.info("get featured listings page=${page}")
         return listingRepository.findFeatured(page)
     }
+
+    fun paginated(): Mono<List<Account>> {
+        var page = 1
+        return accountClient.searchPaginated(page)
+            .expand { response ->
+                if(response.isNotEmpty())
+                    accountClient.searchPaginated(++page)
+                else
+                    Flux.empty()
+            }
+            .map {
+                logger.info("paginated for page=$page")
+                it
+            }
+            .reduce { t, u ->
+                t + u
+            }
+    }
 }

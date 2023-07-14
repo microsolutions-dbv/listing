@@ -1,5 +1,6 @@
 package com.dbiagi.listing.controller
 
+import com.dbiagi.listing.domain.Account
 import com.dbiagi.listing.domain.CreateListingRequest
 import com.dbiagi.listing.domain.Listing
 import com.dbiagi.listing.domain.UpdateListingRequest
@@ -41,4 +42,7 @@ class ListingController(
 
     @GetMapping("/featured")
     fun featured(page: Pageable): Flux<Listing> = listingService.getFeaturedListings(page)
+
+    @GetMapping("/search")
+    fun searchPaginated(): Mono<List<Account>> = listingService.paginated()
 }
