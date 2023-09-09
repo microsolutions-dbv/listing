@@ -39,5 +39,7 @@ logging:
 app:
   paging:
     maxItemsPerPage: 30
+    defaultPageSize: 10
+    defaultSortProperty: createdAt
   services:
     baseUrl: http://localhost:3000

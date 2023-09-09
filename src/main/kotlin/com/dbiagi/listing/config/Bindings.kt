@@ -1,7 +1,8 @@
 package com.dbiagi.listing.config
 
 object Queues {
-    const val LISTING_UPDATED: String = "listing.updated"
+    const val LISTING_CREATED: String = "listing.listing.created"
+    const val LISTING_UPDATED: String = "listing.listing.updated"
 }
 
 object Exchanges {
@@ -10,6 +11,5 @@ object Exchanges {
 }
 
 object RoutingKeys {
-    const val LISTING_CREATED: String = "listing.created"
     const val LISTING_UPDATED: String = "listing.updated"
 }

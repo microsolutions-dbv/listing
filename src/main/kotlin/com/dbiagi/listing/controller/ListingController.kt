@@ -1,9 +1,10 @@
 package com.dbiagi.listing.controller
 
-import com.dbiagi.listing.domain.Account
 import com.dbiagi.listing.domain.CreateListingRequest
 import com.dbiagi.listing.domain.Listing
 import com.dbiagi.listing.domain.UpdateListingRequest
+import com.dbiagi.listing.domain.exception.AppError
+import com.dbiagi.listing.domain.exception.badRequest
 import com.dbiagi.listing.service.ListingService
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -43,6 +44,10 @@ class ListingController(
     @GetMapping("/featured")
     fun featured(page: Pageable): Flux<Listing> = listingService.getFeaturedListings(page)
 
-    @GetMapping("/search")
-    fun searchPaginated(): Mono<List<Account>> = listingService.paginated()
+    @GetMapping("/owner/{id}")
+    fun findByOwnerId(page: Pageable, @PathVariable("id") id: String): Flux<Listing> =
+        listingService.findByOwnerId(page, id)
+
+    @GetMapping("/error")
+    fun error(): Mono<Listing> = Mono.error(badRequest("LISTING_NOT_FOUND", mapOf("id" to "123")))
 }

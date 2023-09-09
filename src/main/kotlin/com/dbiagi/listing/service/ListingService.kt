@@ -10,6 +10,7 @@ import com.dbiagi.listing.domain.UpdateListingRequest
 import com.dbiagi.listing.repository.ListingRepository
 import mu.KotlinLogging
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Slice
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -27,27 +28,26 @@ class ListingService(
 
     fun create(request: CreateListingRequest): Mono<Listing> {
         return Mono.just(request)
-            .map { logger.info("listing create request request={}", request) }
-            .flatMap { accountClient.getById(request.ownerId) }
-            .map { account -> toListing(request, account) }
+            .map {
+                logger.info("listing create request request={}", request)
+                toListing(request)
+            }
             .flatMap { listingRepository.save(it) }
             .doOnSuccess {
-                rabbitMqService.sendMessage(Exchanges.LISTING_CREATED, RoutingKeys.LISTING_CREATED, it)
+                rabbitMqService.sendMessage(Exchanges.LISTING_CREATED, null, it)
                 logger.info("listing created listing={}", it)
             }
-            .doOnError { ex ->
-                logger.error("error creating listing request=$request", ex)
-            }
+            .doOnError { ex -> logger.error("error creating listing request=$request", ex) }
     }
 
     fun delete(listing: Listing): Mono<Void> = listingRepository.delete(listing)
 
-    fun toListing(request: CreateListingRequest, account: Account) =
+    fun toListing(request: CreateListingRequest) =
         Listing(
             description = request.description ?: "",
             featured = request.featured,
             price = request.price,
-            ownerId = account.id.toString(),
+            ownerId = request.ownerId,
             title = request.title
         )
 
@@ -69,7 +69,7 @@ class ListingService(
     fun getListings(page: Pageable): Flux<Listing> {
         logger.info("get listings page=${page}")
 
-        return listingRepository.findSorted(page)
+        return listingRepository.findAll(page.sort)
     }
 
     fun getFeaturedListings(page: Pageable): Flux<Listing> {
@@ -78,20 +78,22 @@ class ListingService(
     }
 
     fun paginated(): Mono<List<Account>> {
-        var page = 1
-        return accountClient.searchPaginated(page)
+        val firstPage = 1
+        return accountClient.searchPaginated(firstPage)
             .expand { response ->
-                if(response.isNotEmpty())
-                    accountClient.searchPaginated(++page)
+                if(response.hasNextPage())
+                    accountClient.searchPaginated(response.page.next)
                 else
                     Flux.empty()
             }
-            .map {
-                logger.info("paginated for page=$page")
-                it
+            .reduce { agg, response ->
+                agg.copy(accounts = agg.accounts + response.accounts)
             }
-            .reduce { t, u ->
-                t + u
-            }
+            .map { it.accounts }
+    }
+
+    fun findByOwnerId(page: Pageable, id: String): Flux<Listing> {
+        logger.info("get listings page=${page} for owner id=${id}")
+        return listingRepository.findByOwnerId(id, page)
     }
 }

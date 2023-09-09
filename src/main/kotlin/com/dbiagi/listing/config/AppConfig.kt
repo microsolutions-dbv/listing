@@ -5,13 +5,15 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConfigurationProperties(prefix = "app.paging")
-class PagingConfig {
-    var maxItemsPerPage: Int = 10
-}
+data class PagingConfig(
+    var maxItemsPerPage: Int = 10,
+    var defaultPageSize: Int = 1,
+    var defaultSortProperty: String = ""
+)
 
 @Configuration
 @ConfigurationProperties(prefix = "app.services")
-class ServicesConfig(
+data class ServicesConfig(
     var connectTimeout: Long = 5, // time in seconds
     var timeout: Long = 10, // time in seconds
     var baseUrl: String = ""

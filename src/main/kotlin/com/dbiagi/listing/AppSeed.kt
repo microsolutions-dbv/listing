@@ -7,6 +7,7 @@ import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
+import reactor.core.publisher.Flux
 import java.math.BigDecimal
 
 @Component
@@ -28,10 +29,10 @@ class AppSeed(
             listingRepository.deleteAll().block()
         }
 
-        createListings(20)
+        createListings(20).subscribe()
     }
 
-    fun createListings(max: Int) {
+    fun createListings(max: Int): Flux<Listing> =
         (0..max)
             .map { i: Int ->
                 Listing(
@@ -43,5 +44,5 @@ class AppSeed(
                 )
             }
             .let { listingRepository.saveAll(it) }
-    }
+
 }

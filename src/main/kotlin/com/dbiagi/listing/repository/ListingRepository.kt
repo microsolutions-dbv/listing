@@ -13,4 +13,6 @@ interface ListingRepository : R2dbcRepository<Listing, UUID> {
 
     @Query("SELECT * FROM listing l WHERE l.featured ORDER BY l.price ASC")
     fun findFeatured(pageable: Pageable): Flux<Listing>
+
+    fun findByOwnerId(ownerId: String, pageable: Pageable): Flux<Listing>
 }
