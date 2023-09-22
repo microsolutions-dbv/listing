@@ -16,5 +16,6 @@ data class PagingConfig(
 data class ServicesConfig(
     var connectTimeout: Long = 5, // time in seconds
     var timeout: Long = 10, // time in seconds
-    var baseUrl: String = ""
+    var accountUrl: String = "http://localhost:3000",
+    var oauthServerUrl: String = "http://netuno:8090",
 )

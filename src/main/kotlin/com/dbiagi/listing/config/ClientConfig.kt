@@ -14,6 +14,7 @@ import org.springframework.http.codec.json.Jackson2JsonDecoder
 import org.springframework.http.codec.json.Jackson2JsonEncoder
 import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.WebClientException
 import org.springframework.web.reactive.function.client.support.WebClientAdapter
 import org.springframework.web.service.invoker.HttpServiceProxyFactory
 import reactor.core.publisher.Mono
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit
 class ClientConfig {
 
     @Bean
-    fun accountClient(apiWebClient: WebClient) = createInterfaceClient(apiWebClient, AccountClient::class.java)
+    fun accountClient(apiWebClient: WebClient): AccountClient = createInterfaceClient(apiWebClient, AccountClient::class.java)
 
     @Bean
     fun apiWebClient(servicesConfig: ServicesConfig, objectMapper: ObjectMapper): WebClient {
@@ -44,14 +45,11 @@ class ClientConfig {
         return WebClient.builder()
             .clientConnector(ReactorClientHttpConnector(httpClient))
             .exchangeStrategies(strategies)
-            .defaultStatusHandler(HttpStatusCode::isError) { response ->
-                Mono.error(Exception(""))
-            }
             .defaultHeaders {
                 it.contentType = MediaType.APPLICATION_JSON
                 it.accept = listOf(MediaType.APPLICATION_JSON)
             }
-            .baseUrl(servicesConfig.baseUrl)
+            .baseUrl(servicesConfig.accountUrl)
             .build()
     }
 

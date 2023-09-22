@@ -4,6 +4,7 @@ import org.springframework.amqp.core.AbstractExchange
 import org.springframework.amqp.core.AmqpAdmin
 import org.springframework.amqp.core.BindingBuilder
 import org.springframework.amqp.core.DirectExchange
+import org.springframework.amqp.core.Exchange
 import org.springframework.amqp.core.FanoutExchange
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.core.QueueBuilder
@@ -30,8 +31,8 @@ class AmqpConfig(
         declareQueueAndDlq(listingUpdatedExchange, Queues.LISTING_UPDATED)
     }
 
-    private fun declareExchange(exchangeName: String, type: ExchangeType): AbstractExchange {
-        val exchange: AbstractExchange = when (type) {
+    private fun declareExchange(exchangeName: String, type: ExchangeType): Exchange {
+        val exchange: Exchange = when (type) {
             ExchangeType.FANOUT -> FanoutExchange(exchangeName)
             ExchangeType.DIRECT -> DirectExchange(exchangeName)
             ExchangeType.TOPIC -> TopicExchange(exchangeName)
@@ -42,7 +43,7 @@ class AmqpConfig(
         return exchange
     }
 
-    private fun declareQueueAndDlq(exchange: AbstractExchange, queueName: String, routingKey: String? = null): Queue {
+    private fun declareQueueAndDlq(exchange: Exchange, queueName: String, routingKey: String? = null): Queue {
         val queue = QueueBuilder.durable(queueName)
             .deadLetterExchange(dlx(queueName))
             .deadLetterRoutingKey(dlq(queueName))

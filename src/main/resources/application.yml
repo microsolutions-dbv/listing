@@ -1,4 +1,16 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: login-app
+            authorization-grant-type: authorization_code
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: http://netuno:8090/realms/Default
+            user-name-attribute: username
   r2dbc:
     username: listing
     password: Ifu!iag12ui1
@@ -42,4 +54,8 @@ app:
     defaultPageSize: 10
     defaultSortProperty: createdAt
   services:
-    baseUrl: http://localhost:3000
+    timeout: 10
+    connectTimeout: 5
+    account: http://localhost:3000
+    oauthServer: http://netuno:8090
+
