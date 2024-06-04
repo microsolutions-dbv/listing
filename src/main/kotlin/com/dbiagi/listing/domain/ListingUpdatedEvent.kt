@@ -1,6 +1,6 @@
 package com.dbiagi.listing.domain
 
-import com.dbiagi.listing.listener.ListingUpdated
+import com.dbiagi.listing.model.Listing
 import java.time.LocalDateTime
 
 data class ListingUpdatedEvent(

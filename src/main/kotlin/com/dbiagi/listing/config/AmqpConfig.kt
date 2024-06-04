@@ -1,6 +1,6 @@
 package com.dbiagi.listing.config
 
-import org.springframework.amqp.core.AbstractExchange
+import com.dbiagi.listing.service.rabbit.RabbitErrorHandler
 import org.springframework.amqp.core.AmqpAdmin
 import org.springframework.amqp.core.BindingBuilder
 import org.springframework.amqp.core.DirectExchange
@@ -9,6 +9,9 @@ import org.springframework.amqp.core.FanoutExchange
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.core.QueueBuilder
 import org.springframework.amqp.core.TopicExchange
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory
+import org.springframework.amqp.rabbit.connection.ConnectionFactory
+import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -30,6 +33,18 @@ class AmqpConfig(
         val listingUpdatedExchange = declareExchange(Exchanges.LISTING_UPDATED, ExchangeType.FANOUT)
         declareQueueAndDlq(listingUpdatedExchange, Queues.LISTING_UPDATED)
     }
+
+//    @Bean
+//    fun rabbitListenerContainerFactory(
+//        connectionFactory: ConnectionFactory,
+//        configurer: SimpleRabbitListenerContainerFactoryConfigurer,
+//        rabbitErrorHandler: RabbitErrorHandler
+//    ): SimpleRabbitListenerContainerFactory {
+//        val factory = SimpleRabbitListenerContainerFactory()
+//        configurer.configure(factory, connectionFactory)
+//
+//        return factory
+//    }
 
     private fun declareExchange(exchangeName: String, type: ExchangeType): Exchange {
         val exchange: Exchange = when (type) {

@@ -16,24 +16,38 @@ class ControllerAdvice {
     val logger = mu.KotlinLogging.logger {}
 
     @ExceptionHandler(Exception::class)
-    fun handleException(exception: Exception): ResponseEntity<ErrorResponse> {
-        logger.error("Unhandled exception!", exception)
-        internalError().errors
-        return ResponseEntity
-            .internalServerError()
-            .body(ErrorResponse(errors = emptyList()))
-    }
+    fun handleException(exception: Exception): ResponseEntity<Void> = handleUnknowException(exception)
 
     @ExceptionHandler(BaseException::class)
-    fun handleBaseException(exception: BaseException): ResponseEntity<ErrorResponse> =
-        ResponseEntity
-            .status(toStatus(exception))
-            .body(ErrorResponse(errors = exception.errors))
+    fun handleBaseException(exception: BaseException) = when (exception) {
+        is BadRequestException -> handleBadRequestException(exception)
+        is NotFoundException -> handleNotFoundException()
+        is UnprocessableException -> handleBadRequestException(exception)
+        else -> handleUnknowException(exception)
+    }
 
-    private fun toStatus(exception: BaseException): HttpStatus = when (exception) {
-        is BadRequestException -> HttpStatus.BAD_REQUEST
-        is NotFoundException -> HttpStatus.NOT_FOUND
-        is UnprocessableException -> HttpStatus.UNPROCESSABLE_ENTITY
-        else -> HttpStatus.INTERNAL_SERVER_ERROR
+    private fun handleBadRequestException(exception: BadRequestException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .badRequest()
+            .body(ErrorResponse(errors = exception.errors))
+    }
+
+    private fun handleNotFoundException(): ResponseEntity<Void> {
+        return ResponseEntity
+            .notFound()
+            .build()
+    }
+
+    private fun handleBadRequestException(exception: UnprocessableException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .unprocessableEntity()
+            .body(ErrorResponse(errors = exception.errors))
+    }
+
+    private fun handleUnknowException(exception: Exception): ResponseEntity<Void> {
+        logger.error("Unhandled exception!", exception)
+        return ResponseEntity
+            .internalServerError()
+            .build()
     }
 }

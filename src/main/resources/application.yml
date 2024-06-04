@@ -1,16 +1,16 @@
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: login-app
-            authorization-grant-type: authorization_code
-            scope: openid
-        provider:
-          keycloak:
-            issuer-uri: http://netuno:8090/realms/Default
-            user-name-attribute: username
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          keycloak:
+#            client-id: login-app
+#            authorization-grant-type: authorization_code
+#            scope: openid
+#        provider:
+#          keycloak:
+#            issuer-uri: http://netuno:8090/realms/Default
+#            user-name-attribute: username
   r2dbc:
     username: listing
     password: Ifu!iag12ui1
@@ -18,12 +18,13 @@ spring:
   rabbitmq:
     username: listing
     password: R%@WE64C6^qt
-    host: netuno
+    host: localhost
     port: 5672
     listener:
       type: simple
       simple:
         prefetch: 3
+        max-concurrency: 4
         retry:
           enabled: true
           initial-interval: 1000
@@ -47,6 +48,7 @@ spring:
 logging:
   level:
     org.springframework.r2dbc: debug
+    org.springframework.amqp.rabbit: error
 
 app:
   paging:
@@ -58,4 +60,3 @@ app:
     connectTimeout: 5
     account: http://localhost:3000
     oauthServer: http://netuno:8090
-

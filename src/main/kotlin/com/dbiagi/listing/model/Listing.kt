@@ -1,5 +1,7 @@
-package com.dbiagi.listing.domain
+package com.dbiagi.listing.model
 
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import org.springframework.data.annotation.Id
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -18,6 +20,9 @@ data class Listing(
     val price: BigDecimal = BigDecimal.ZERO,
 
     val featured: Boolean = false,
+
+    @Enumerated(EnumType.STRING)
+    val type: ListingType = ListingType.NORMAL,
 
     val createdAt: LocalDateTime = LocalDateTime.now(),
 

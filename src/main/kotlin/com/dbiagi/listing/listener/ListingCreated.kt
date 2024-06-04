@@ -1,6 +1,7 @@
 package com.dbiagi.listing.listener
 
 import com.dbiagi.listing.config.Queues
+import com.dbiagi.listing.domain.exception.ListingCreationException
 import mu.KotlinLogging
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.stereotype.Component
@@ -12,5 +13,7 @@ class ListingCreated {
     @RabbitListener(queues = [Queues.LISTING_CREATED])
     fun onListingCreated(listing: String) {
         logger.info("listing created payload=${listing}")
+
+        throw ListingCreationException()
     }
 }

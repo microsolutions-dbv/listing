@@ -2,6 +2,7 @@ package com.dbiagi.listing.client
 
 import com.dbiagi.listing.domain.Account
 import com.dbiagi.listing.domain.AccountSearchResponse
+import com.dbiagi.listing.domain.ListingBalance
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.service.annotation.GetExchange
@@ -15,4 +16,7 @@ interface AccountClient {
 
     @GetExchange
     fun searchPaginated(@RequestParam("page") page: Int): Mono<AccountSearchResponse>
+
+    @GetExchange("/{accountId}/listings/balance")
+    fun getListingBalance(accountId: String): Mono<ListingBalance>
 }

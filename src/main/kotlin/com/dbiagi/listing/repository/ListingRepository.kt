@@ -1,6 +1,6 @@
 package com.dbiagi.listing.repository
 
-import com.dbiagi.listing.domain.Listing
+import com.dbiagi.listing.model.Listing
 import org.springframework.data.domain.Pageable
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.r2dbc.repository.R2dbcRepository

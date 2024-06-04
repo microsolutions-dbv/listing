@@ -1,0 +1,295 @@
+{
+  "uuid": "1e590e36-ae1c-4abd-a9cf-057a27466b88",
+  "lastMigration": 32,
+  "name": "Listing",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "bfa85468-8f76-456a-9e44-13c2bd810bca",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "accounts/:accountId",
+      "responses": [
+        {
+          "uuid": "90411abd-f216-4833-82b2-281b8b3eea55",
+          "body": "{{{oneOf (filter (dataRaw 'Accounts') (object id = (urlParam 'accountId'))) true }}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "c6fi",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "accountId",
+              "value": "a67e07f6-455a-4483-8e2d-264118a7ec84",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "914c4259-28e8-4fea-90e1-d35698035374",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "accountId",
+              "value": "b66243e3-e988-44c4-b24d-a492e87563b6",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "5a3d978f-5cb6-4edc-85c1-64960d98e545",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "accountId",
+              "value": "b663c4d8-e0a9-4b5a-8a28-6609a14f6b5b",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "e6948471-e8d3-4846-b823-9adca4b14940",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "095c4b15-3e88-4893-9bbb-fc3a86d4534c",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "accounts/:accountId/listings/balance",
+      "responses": [
+        {
+          "uuid": "7e4a8e96-f8de-483d-aced-8a4913778d2f",
+          "body": "{{ setVar 'account' (oneOf (filter (dataRaw 'Accounts') (object id = (urlParam 'accountId')))) }}\n\n{\n  \"account\": {{{stringify @account}}},\n  \"items\": [\n    {{ data 'AccountsBalance' 'normal' }}\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "accountId",
+              "value": "a67e07f6-455a-4483-8e2d-264118a7ec84",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "93f4f02c-3669-4354-a9a3-d3480e0b7293",
+          "body": "{{ setVar 'account' (oneOf (filter (dataRaw 'Accounts') (object id = (urlParam 'accountId')))) }}\n\n{\n  \"account\": {{{stringify @account}}},\n  \"items\": [\n    {{ data 'AccountsBalance' 'normal' }},\n    {{ data 'AccountsBalance' 'featured' }}\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "accountId",
+              "value": "b66243e3-e988-44c4-b24d-a492e87563b6",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "07fe1f33-e748-46e2-8b72-d75fb2bb94c4",
+          "body": "{{ setVar 'account' (oneOf (filter (dataRaw 'Accounts') (object id = (urlParam 'accountId')))) }}\n\n{\n  \"account\": {{{stringify @account}}},\n  \"items\": [\n    {{ data 'AccountsBalance' 'normalNotAvailable' }},\n    {{ data 'AccountsBalance' 'premium' }}\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "accountId",
+              "value": "b663c4d8-e0a9-4b5a-8a28-6609a14f6b5b",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "7b5e1357-d600-4f6d-bb75-307e84aa072f",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "bfa85468-8f76-456a-9e44-13c2bd810bca"
+    },
+    {
+      "type": "route",
+      "uuid": "095c4b15-3e88-4893-9bbb-fc3a86d4534c"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "548301a7-e48a-427b-9791-7b14012cbdb7",
+      "id": "c6fi",
+      "name": "Accounts",
+      "documentation": "Account list",
+      "value": "[\n  {\n    \"id\": \"a67e07f6-455a-4483-8e2d-264118a7ec84\",\n    \"email\": \"{{ lowercase (faker 'internet.email')  }}\",\n    \"name\": \"{{ faker 'person.fullName' }}\",\n    \"createdAt\": \"2024-02-01T14:22:12\",\n    \"updatedAt\": \"2024-02-01T14:22:12\"\n  },\n  {\n    \"id\": \"b66243e3-e988-44c4-b24d-a492e87563b6\",\n    \"email\": \"{{ lowercase (faker 'internet.email')  }}\",\n    \"name\": \"{{ faker 'person.fullName' }}\",\n    \"createdAt\": \"2024-03-01T14:22:10\",\n    \"updatedAt\": \"2024-03-01T13:12:16\"\n  },\n  {\n    \"id\": \"b663c4d8-e0a9-4b5a-8a28-6609a14f6b5b\",\n    \"email\": \"{{ lowercase (faker 'internet.email')  }}\",\n    \"name\": \"{{ faker 'person.fullName' }}\",\n    \"createdAt\": \"2024-05-01T20:22:55\",\n    \"updatedAt\": \"2024-05-14T21:52:12\"\n  }\n]"
+    },
+    {
+      "uuid": "b4b69aa4-2db9-4065-9fc3-13e5a15bef6e",
+      "id": "5x28",
+      "name": "AccountsBalance",
+      "documentation": "",
+      "value": "{\n  \"normal\": {\n    \"total\": 10,\n    \"available\": 9,\n    \"type\": \"NORMAL\"\n  },\n  \"featured\": {\n    \"total\": 5,\n    \"available\": 1,\n    \"type\": \"FEATURED\"\n  },\n  \"premium\": {\n    \"total\": 2,\n    \"available\": 1,\n    \"type\": \"PREMIUM\"\n  },\n  \"normalNotAvailable\": {\n    \"total\": 1,\n    \"available\": 0,\n    \"type\": \"NORMAL\"\n  }\n}"
+    }
+  ],
+  "callbacks": []
+}

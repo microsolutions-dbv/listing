@@ -10,9 +10,10 @@ class AccountService(
     private val accountClient: AccountClient
 ) {
     val logger = mu.KotlinLogging.logger {}
+
     fun getAccount(id: String): Mono<Account> = accountClient.getById(id)
         .map { account ->
-            logger.info("account found for id=$id, account={}", account)
+            logger.info("account found for id=$id, account=$account")
             account
         }
         .doOnError { error ->

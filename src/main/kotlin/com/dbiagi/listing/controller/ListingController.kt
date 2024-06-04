@@ -1,10 +1,9 @@
 package com.dbiagi.listing.controller
 
 import com.dbiagi.listing.domain.CreateListingRequest
-import com.dbiagi.listing.domain.Listing
+import com.dbiagi.listing.model.Listing
 import com.dbiagi.listing.domain.UpdateListingRequest
-import com.dbiagi.listing.domain.exception.AppError
-import com.dbiagi.listing.domain.exception.badRequest
+import com.dbiagi.listing.domain.exception.NotFoundException
 import com.dbiagi.listing.service.ListingService
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -12,7 +11,8 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import java.util.*
+import reactor.kotlin.core.publisher.switchIfEmpty
+import java.util.UUID
 
 @RestController
 @RequestMapping("/listings")
@@ -33,9 +33,9 @@ class ListingController(
     }
 
     @GetMapping("/{id}")
-    fun getListing(@PathVariable("id") id: String): Mono<Listing> {
+    fun getListing(@PathVariable("id") id: UUID): Mono<Listing> {
         logger.info("getting listing with id $id")
-        return listingService.getListing(id)
+        return listingService.getListing(id).switchIfEmpty { Mono.error(NotFoundException())}
     }
 
     @GetMapping
@@ -44,10 +44,7 @@ class ListingController(
     @GetMapping("/featured")
     fun featured(page: Pageable): Flux<Listing> = listingService.getFeaturedListings(page)
 
-    @GetMapping("/owner/{id}")
+    @GetMapping("/{id}/owner")
     fun findByOwnerId(page: Pageable, @PathVariable("id") id: String): Flux<Listing> =
         listingService.findByOwnerId(page, id)
-
-    @GetMapping("/error")
-    fun error(): Mono<Listing> = Mono.error(badRequest("LISTING_NOT_FOUND", mapOf("id" to "123")))
 }

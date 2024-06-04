@@ -1,2 +1,12 @@
 server:
   port: 8080
+spring.sql.init.mode: always
+spring.jpa.defer-datasource-initialization: true
+spring:
+  rabbitmq:
+    username: guest
+    password: guest
+  r2dbc:
+    username: listing
+    password: 123456
+    url: r2dbc:postgresql://localhost:5432/listing

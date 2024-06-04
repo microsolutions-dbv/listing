@@ -1,0 +1,62 @@
+spring:
+  #  security:
+  #    oauth2:
+  #      client:
+  #        registration:
+  #          keycloak:
+  #            client-id: login-app
+  #            authorization-grant-type: authorization_code
+  #            scope: openid
+  #        provider:
+  #          keycloak:
+  #            issuer-uri: http://netuno:8090/realms/Default
+  #            user-name-attribute: username
+  r2dbc:
+    username: listing
+    password: 123456
+    url: r2dbc:postgresql://localhost:5432/listing
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
+    listener:
+      type: simple
+      simple:
+        prefetch: 3
+        max-concurrency: 4
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+  jackson:
+    locale: en_US
+    date-format: "yyyy-MM-dd'T'HH:mm:ss"
+    time-zone: UTC
+    default-property-inclusion: non_null
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      READ_UNKNOWN_ENUM_VALUES_AS_NULL: true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://authserver:8080
+logging:
+  level:
+    org.springframework.r2dbc: debug
+    org.springframework.amqp.rabbit: error
+
+app:
+  paging:
+    maxItemsPerPage: 30
+    defaultPageSize: 10
+    defaultSortProperty: createdAt
+  services:
+    timeout: 10
+    connectTimeout: 5
+    account: http://localhost:3000
+    oauthServer: http://netuno:8090

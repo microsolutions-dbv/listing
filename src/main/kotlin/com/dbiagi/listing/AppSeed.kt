@@ -1,7 +1,7 @@
 package com.dbiagi.listing
 
 import com.dbiagi.listing.config.Environment
-import com.dbiagi.listing.domain.Listing
+import com.dbiagi.listing.model.Listing
 import com.dbiagi.listing.repository.ListingRepository
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
