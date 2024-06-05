@@ -5,7 +5,16 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
+    id("org.sonarqube") version "4.4.1.3373"
     jacoco
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "microsolutions-dbv_listing")
+        property("sonar.organization", "microsolutions-dbv")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
 
 group = "com.dbiagi"

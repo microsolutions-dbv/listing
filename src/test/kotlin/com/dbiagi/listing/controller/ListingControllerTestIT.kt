@@ -10,7 +10,7 @@ class ListingControllerTestIT(webTestClient: WebTestClient) : ListingApplication
         val uuid = UUID.randomUUID().toString()
 
         webTestClient
-            .post().uri("/listings/$uuid")
+            .get().uri("/listings/$uuid")
             .exchange()
             .expectStatus()
             .isNotFound

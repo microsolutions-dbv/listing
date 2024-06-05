@@ -13,11 +13,11 @@ spring:
 #            user-name-attribute: username
   r2dbc:
     username: listing
-    password: Ifu!iag12ui1
+    password: 123456
     url: r2dbc:postgresql://netuno:5432/listing
   rabbitmq:
     username: listing
-    password: R%@WE64C6^qt
+    password: 123456
     host: localhost
     port: 5672
     listener:
