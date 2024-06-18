@@ -75,6 +75,7 @@ tasks.withType<KotlinCompile> {
 
 jacoco {
     toolVersion = "0.8.11"
+    reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
 }
 
 tasks.jacocoTestReport {
