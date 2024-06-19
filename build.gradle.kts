@@ -9,11 +9,23 @@ plugins {
     jacoco
 }
 
+val coverageExclusions = listOf(
+    "**/build/**",
+    "**/src/test/**",
+    "**/src/main/resources/**",
+    "**/src/test/resources/**",
+    "**/src/main/kotlin/com/dbiagi/listing/domain/**",
+    "**/src/main/kotlin/com/dbiagi/listing/model/**",
+    "**/src/main/kotlin/com/dbiagi/listing/controller/**",
+    "**/src/main/kotlin/com/dbiagi/listing/config/**",
+)
+
 sonar {
     properties {
         property("sonar.projectKey", "microsolutions-dbv_listing")
         property("sonar.organization", "microsolutions-dbv")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.exclusions", coverageExclusions.joinToString(","))
     }
 }
 
@@ -71,6 +83,7 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs += "-Xjsr305=strict"
         jvmTarget = "21"
     }
+    incremental = true
 }
 
 jacoco {
@@ -89,4 +102,15 @@ tasks.test {
     finalizedBy(tasks.jacocoTestReport)
     exclude("**/*IT*")
     testLogging.showStandardStreams = true
+
+    configure<JacocoTaskExtension> {
+        excludes = listOf(
+            "com.dbiagi.listing.domain.*",
+            "com.dbiagi.listing.model.*",
+            "com.dbiagi.listing.config.*",
+            "com.dbiagi.listing.controller.*",
+            "com.dbiagi.listing.client.*",
+            "com.dbiagi.listing.repository.*",
+        )
+    }
 }
