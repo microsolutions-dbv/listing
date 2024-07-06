@@ -21,6 +21,8 @@ data class Listing(
 
     val featured: Boolean = false,
 
+    val active: Boolean = true,
+
     @Enumerated(EnumType.STRING)
     val type: ListingType = ListingType.NORMAL,
 

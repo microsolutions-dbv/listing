@@ -47,4 +47,7 @@ class ListingController(
     @GetMapping("/{id}/owner")
     fun findByOwnerId(page: Pageable, @PathVariable("id") id: String): Flux<Listing> =
         listingService.findByOwnerId(page, id)
+
+    @PatchMapping("/{id}/deactivate")
+    fun deactivate(@PathVariable id: String): Mono<Void> = listingService.deactivate(id)
 }

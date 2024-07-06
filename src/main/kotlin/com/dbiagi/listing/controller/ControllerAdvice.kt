@@ -5,8 +5,6 @@ import com.dbiagi.listing.domain.exception.BaseException
 import com.dbiagi.listing.domain.exception.ErrorResponse
 import com.dbiagi.listing.domain.exception.NotFoundException
 import com.dbiagi.listing.domain.exception.UnprocessableException
-import com.dbiagi.listing.domain.exception.internalError
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler

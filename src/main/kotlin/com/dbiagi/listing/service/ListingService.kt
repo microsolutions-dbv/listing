@@ -42,7 +42,7 @@ class ListingService(
             .doOnError { ex -> logger.error("error creating listing request=$request", ex) }
     }
 
-    fun delete(listing: Listing): Mono<Void> = listingRepository.delete(listing)
+    fun deactivate(id: String): Mono<Void> = listingRepository.deactivate(id)
 
     fun toListing(request: CreateListingRequest) =
         Listing(
