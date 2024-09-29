@@ -16,8 +16,8 @@ spring:
     password: 123456
     url: r2dbc:postgresql://netuno:5432/listing
   rabbitmq:
-    username: listing
-    password: 123456
+    username: guest
+    password: guest
     host: localhost
     port: 5672
     listener:
@@ -40,6 +40,15 @@ spring:
       READ_UNKNOWN_ENUM_VALUES_AS_NULL: true
       FAIL_ON_UNKNOWN_PROPERTIES: false
 
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui/index.html
+  show-actuator: true
+  pathsToMatch: /listings/**
+
 #  security:
 #    oauth2:
 #      resourceserver:
@@ -60,3 +69,13 @@ app:
     connectTimeout: 5
     account: http://localhost:3000
     oauthServer: http://netuno:8090
+
+security:
+  publicPaths:
+    - /actuator/**
+    - /api-docs/**
+    - /swagger-ui/**
+    - /swagger-ui.html
+    - /webjars/**
+    - /swagger-resources
+    - /listings/**

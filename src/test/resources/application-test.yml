@@ -60,3 +60,12 @@ app:
     connectTimeout: 5
     account: http://localhost:3000
     oauthServer: http://netuno:8090
+security:
+  publicPaths:
+    - /actuator/**
+    - /v3/api-docs/**
+    - /swagger-ui/**
+    - /swagger-ui.html
+    - /webjars/**
+    - /swagger-resources
+    - /listings/**

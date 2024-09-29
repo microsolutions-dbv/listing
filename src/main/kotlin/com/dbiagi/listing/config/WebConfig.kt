@@ -1,5 +1,6 @@
 package com.dbiagi.listing.config
 
+import com.dbiagi.listing.domain.config.PagingConfig
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.domain.PageRequest

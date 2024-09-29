@@ -36,6 +36,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("io.github.microutils:kotlin-logging:1.12.5")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // Security
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -49,6 +50,8 @@ dependencies {
 
     // Tests
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.mockito:mockito-core:4.8.0")
@@ -64,6 +67,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:testcontainers:1.19.8")
     testImplementation("io.kotest.extensions:kotest-extensions-testcontainers:2.0.2")
+
+    // Swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-api:2.6.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0")
 }
 
 tasks.withType<KotlinCompile> {

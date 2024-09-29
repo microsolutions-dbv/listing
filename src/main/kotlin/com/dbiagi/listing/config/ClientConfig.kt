@@ -1,6 +1,7 @@
 package com.dbiagi.listing.config
 
 import com.dbiagi.listing.client.AccountClient
+import com.dbiagi.listing.domain.config.ServicesConfig
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler
@@ -21,7 +22,6 @@ import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
 import java.time.Duration
 import java.util.concurrent.TimeUnit
-
 
 @Configuration
 class ClientConfig {
